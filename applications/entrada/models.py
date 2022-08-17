@@ -1,8 +1,12 @@
 from django.db import models
 from django.conf import settings
+from django.db.models.signals import post_save
 # apps terceros
 from model_utils.models import TimeStampedModel
 from ckeditor_uploader.fields import RichTextUploadingField
+from PIL import Image
+# managers
+from .managers import EntryManager
 
 # Create your models here.
 
@@ -69,6 +73,8 @@ class Entry(TimeStampedModel):
     in_home = models.BooleanField(default=False)
     slug = models.SlugField(editable=False, max_length=300)
 
+    objects = EntryManager()
+
     class Meta:
         verbose_name = 'Entrada'
         verbose_name_plural = 'Entradas'
@@ -76,3 +82,12 @@ class Entry(TimeStampedModel):
     def __str__(self):
         return self.title
     
+
+def optimize_image(sender, instance, **kwargs):
+    print('=====Función optimize_image========')
+    print(instance)
+    if instance.image:
+        image = Image.open(instance.image.path)
+        image.save(instance.image.path, quality=20, optimize=True)
+
+post_save.connect(optimize_image, sender=Entry) # Clase 152

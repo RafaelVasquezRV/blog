@@ -7,6 +7,20 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     TemplateView
 )
+# Modelos apps
+from applications.entrada.models import Entry
 
-class TestPlantilla(TemplateView):
-    template_name = "plantillas/register.html"
+class HomePageView(TemplateView):
+    template_name = "home/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomePageView, self).get_context_data(**kwargs)
+        # contexto de portada
+        context["portada"] = Entry.objects.entrada_en_portada()
+        # contexto para los artículos en home
+        context["entradas_home"] = Entry.objects.entradas_en_home()
+        # contexto para las entradas recientes
+        context["entradas_recientes"] = Entry.objects.entradas_recientes()
+
+        return context
+    
