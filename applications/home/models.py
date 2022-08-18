@@ -21,6 +21,7 @@ class Home(TimeStampedModel):
         blank=True,
         null=True
     )
+    email = models.EmailField('Correo de Contacto', max_length=100)
     phone = models.CharField(
         'Número de Contacto',
         max_length=20
