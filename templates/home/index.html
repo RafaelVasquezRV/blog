@@ -14,7 +14,7 @@
             <div class="card" style="width: 100%;">
                 <img src="{{ portada.image.url }}">
                 <div class="card-section">
-                  <h4>{{ portada.title }}</h4>
+                  <h4><a href="{% url 'entrada_app:entry-detail' portada.id %}" style="color: black;">{{ portada.title }}</a></h4>
                   <p  align="justify">{{ portada.resume }}</p>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 <div class="card" style="width: 100%;">
                     <img src="{{ entrada.image.url }}" style="height: 240px;">
                     <div class="card-section">
-                      <h5>{{ entrada.title | truncatechars:20}}</h5>
+                      <h5><a href="{% url 'entrada_app:entry-detail' entrada.id %}" style="color: black;">{{ entrada.title | truncatechars:20}}</a></h5>
                     </div>
                 </div>
             </div>               
@@ -72,12 +72,12 @@
 
     <!-- tercer bloque home -->
     <div class="grid-x grid-margin-x align-center">
-        <h3 class="cell">Articulos Recientes:</h3>
+        <h3 class="cell">Artículos Recientes:</h3>
         
         {% for reciente in entradas_recientes  %}
         <div class="cell small-6 large-4">
             <div class="card" style="width: 100%;">
-                <img src="{{ reciente.image.url }}" style="height: 300px;">
+                <a href="{% url 'entrada_app:entry-detail' reciente.id %}"><img src="{{ reciente.image.url }}" style="height: 300px;"></a>
                 <div class="card-section">
                   <h4>{{ reciente.title }}</h4>
                   <p align="justify">{{ reciente.resume }}</p>

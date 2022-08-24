@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from django.views.generic import (
     ListView,
+    DetailView,
 )
 
 # Modelos apps
@@ -28,4 +29,8 @@ class EntryListView(ListView):
         resultado = Entry.objects.buscar_entrada(kword, categoria)
         return resultado
     
+
+class EntryDetailView(DetailView):
+    template_name = "entrada/detail.html"
+    model = Entry
 

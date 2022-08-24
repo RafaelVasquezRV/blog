@@ -13,7 +13,7 @@ from .models import Home
 from applications.entrada.models import Entry
 
 # Formularios
-from .forms import SuscribersForm
+from .forms import SuscribersForm, ContactForm
 
 class HomePageView(TemplateView):
     template_name = "home/index.html"
@@ -31,11 +31,14 @@ class HomePageView(TemplateView):
         # enviamos formulario de suscripción
         context["form"]  = SuscribersForm
         return context
-    
-
 
 
 class SuscriberCreateView(CreateView):
     form_class = SuscribersForm
     success_url = '.' # se indica que vuelva o regrese a la misma página
 
+
+
+class ContactCreateView(CreateView):
+    form_class = ContactForm
+    success_url = '.' # se indica que vuelva o regrese a la misma página

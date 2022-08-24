@@ -1,6 +1,11 @@
+# standard library
+from datetime import timedelta, datetime
+#
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save
+#
+from django.template.defaultfilters import slugify
 # apps terceros
 from model_utils.models import TimeStampedModel
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -81,6 +86,21 @@ class Entry(TimeStampedModel):
     
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        # calculamos el toral de segundos de la hora actual
+        now = datetime.now()
+        total_time = timedelta(
+            hours=now.hour,
+            minutes=now.minute,
+            seconds=now.second,
+        )
+        seconds = int(total_time.total_seconds())
+        slug_unique = '%s %s' % (self.title, str(seconds))
+        
+        self.slug = slugify(slug_unique)
+
+        return super(Entry, self).save(*args, **kwargs)
     
 
 def optimize_image(sender, instance, **kwargs):
