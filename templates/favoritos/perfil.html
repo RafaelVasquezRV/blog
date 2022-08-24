@@ -1,6 +1,9 @@
 <!-- head para PC -->
 {% extends "favoritos/base_favoritos.html" %}
+
 {% load  static %}
+
+{% block title %}Perfil de {{ user.full_name }}{% endblock title %}
 
 {% block content %}
 

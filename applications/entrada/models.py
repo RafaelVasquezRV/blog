@@ -4,6 +4,7 @@ from datetime import timedelta, datetime
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save
+from django.urls import reverse_lazy
 #
 from django.template.defaultfilters import slugify
 # apps terceros
@@ -87,6 +88,14 @@ class Entry(TimeStampedModel):
     def __str__(self):
         return self.title
     
+    def get_absolute_url(self):
+        return reverse_lazy(
+            'entrada_app:entry-detail',
+            kwargs={                
+                'slug': self.slug
+            }
+        )
+
     def save(self, *args, **kwargs):
         # calculamos el toral de segundos de la hora actual
         now = datetime.now()

@@ -1,7 +1,5 @@
 from django.shortcuts import render
 
-from django.db import IntegrityError
-
 from django.urls import reverse_lazy, reverse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -37,16 +35,11 @@ class AddFavoritosView(LoginRequiredMixin, View):
         usuario = self.request.user
         entrada = Entry.objects.get(id=self.kwargs['pk'])
         # registramos favorito
-        try:
-            Favorites.objects.create(
-                user=usuario,
-                entry=entrada,
-            )
-        except IntegrityError:
-            # context = self.get_context_data(mensaje='No se puede agregar')
-            # return self.render_to_response(context)
-            return render("entrada/detail.html", {"message": 'No se puede agregar'})
-
+        Favorites.objects.create(
+            user=usuario,
+            entry=entrada,
+        )
+        
         return HttpResponseRedirect(
             reverse(
                 'favoritos_app:perfil',

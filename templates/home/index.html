@@ -1,6 +1,13 @@
 <!-- head para PC -->
 {% extends "home/base_home.html" %}
+
 {% load  static %}
+
+{% block title %}{{ home.title }}{% endblock title %}
+
+{% block description %}
+<meta name="description" content="{{ home.description }}">
+{% endblock description %}
 
 {% block content %}
 
@@ -14,7 +21,7 @@
             <div class="card" style="width: 100%;">
                 <img src="{{ portada.image.url }}">
                 <div class="card-section">
-                  <h4><a href="{% url 'entrada_app:entry-detail' portada.id %}" style="color: black;">{{ portada.title }}</a></h4>
+                  <h4><a href="{% url 'entrada_app:entry-detail' portada.slug %}" style="color: black;">{{ portada.title }}</a></h4>
                   <p  align="justify">{{ portada.resume }}</p>
                 </div>
             </div>
@@ -29,7 +36,7 @@
                 <div class="card" style="width: 100%;">
                     <img src="{{ entrada.image.url }}" style="height: 240px;">
                     <div class="card-section">
-                      <h5><a href="{% url 'entrada_app:entry-detail' entrada.id %}" style="color: black;">{{ entrada.title | truncatechars:20}}</a></h5>
+                      <h5><a href="{% url 'entrada_app:entry-detail' entrada.slug %}" style="color: black;">{{ entrada.title | truncatechars:20}}</a></h5>
                     </div>
                 </div>
             </div>               
@@ -77,7 +84,7 @@
         {% for reciente in entradas_recientes  %}
         <div class="cell small-6 large-4">
             <div class="card" style="width: 100%;">
-                <a href="{% url 'entrada_app:entry-detail' reciente.id %}"><img src="{{ reciente.image.url }}" style="height: 300px;"></a>
+                <a href="{% url 'entrada_app:entry-detail' reciente.slug %}"><img src="{{ reciente.image.url }}" style="height: 300px;"></a>
                 <div class="card-section">
                   <h4>{{ reciente.title }}</h4>
                   <p align="justify">{{ reciente.resume }}</p>
